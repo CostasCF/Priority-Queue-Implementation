@@ -12,7 +12,7 @@ BtNode* GetNewNode(int data){
     BtNode* newNode = new BtNode(); //δεσμευουμε την μνημη για το νεο στοιχειο που εισαγουμε
     //θα μπορουοσαμε να χρησιμοποιήσουμε και την malloc εδω περα πχ, BtNode* newNode = (BtNode*)malloc(sizeof(BtNode));
     newNode->data = data; //εισαγουμε στην νεα δεσμευμενη μνημη τα δεδομενα της παραμετρου data
-    newNode->left = newNode->right = NULL;
+    newNode->left = newNode->right = NULL;//οριζουμε δεξια και αριστερα την μνημη του στοιχειου στο κενο
     return newNode;
 }
 
