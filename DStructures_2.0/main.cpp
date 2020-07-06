@@ -16,6 +16,25 @@ BtNode* GetNewNode(int data){
     return newNode;
 }
 
+//μεθοδος ευρεσης μεγιστου
+int FindMax(BtNode* rootPtr){
+
+}
+
+//μεθοδος ευρεσης ελαχιστου
+//αυτο μπορει να γινει και με αναδρομη
+int FindMin(BtNode* rootPtr){ //για να βρουμε το ελαχιστο πρεπει να διασχιζουμε το δεντρο συνεχεια αριστερα
+    if(rootPtr == NULL){ //εαν το δεντρο ειναι αδειο, επεστρεψε αυτο το error
+        cout << "Error: Tree is empty\n";
+        return -1;
+    }
+    BtNode* current = rootPtr;
+    while(current->left != NULL){ //οσο αριστερα υπαρχει κομβος
+        current = current ->left; //αλλαξε τον pointer σε αυτον τον κομβο που βρεθηκε
+    }
+    return current->data;
+}
+
 //μεθοδος για εισαγωγη κομβων στο δεντρο
 BtNode* insert(BtNode* rootPtr, int data) {
     if(rootPtr == NULL){
@@ -30,6 +49,7 @@ BtNode* insert(BtNode* rootPtr, int data) {
     return rootPtr;
 }
 
+//μεθοδος αναζητησης κομβων
 bool Search(BtNode* rootPtr, int data){
     if(rootPtr == NULL) return  false;
     else if(rootPtr->data == data) return true; // εαν το στοιχειο αντιστοιχει στην θεση μνημης, επεστρεψε true
@@ -39,9 +59,16 @@ bool Search(BtNode* rootPtr, int data){
 int main() {
     BtNode* rootPtr; // pointer που δειχνει στην ρίζα του δεντρου
     rootPtr = NULL; //αρχικοποιουμαι το δεντρο στο κενο
-    rootPtr = insert(rootPtr,  12);
-    rootPtr = insert(rootPtr, 20);
+    rootPtr = insert(rootPtr,  12);     rootPtr = insert(rootPtr,52);
+    rootPtr = insert(rootPtr, 20);    rootPtr = insert(rootPtr,2);
+    rootPtr = insert(rootPtr, 4);    rootPtr = insert(rootPtr, 100);
+    rootPtr = insert(rootPtr, 10);    rootPtr = insert(rootPtr,245);
+    rootPtr = insert(rootPtr, 5);    rootPtr = insert(rootPtr, 1205);
 
+
+
+    int min = FindMin(rootPtr);
+    cout<<"The minimum is: " << min<<endl;
     int  number;
     cout<<"Enter the number you want to search in the binary tree"<<endl;
     cin>>number;
