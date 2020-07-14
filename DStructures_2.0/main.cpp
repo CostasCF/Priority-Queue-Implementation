@@ -16,12 +16,47 @@ BtNode* getNewNode(int data){
     return newNode;
 }
 
-
-//μεθοδος ευρεσης μεγιστου
-void deleteMax(BtNode* maxNode){
-
+//Function to find minimum in a tree.
+BtNode* FindMin(BtNode* root)
+{
+    while(root->left != NULL) root = root->left;
+    return root;
+}
+//μεθοδος διαγραφής μεγιστου
+// Function to search a delete a value from tree.
+BtNode* deleteElement(BtNode *rootPtr, int data) {
+    if(rootPtr == NULL) return rootPtr;
+    else if(data < rootPtr->data) rootPtr->left = deleteElement(rootPtr->left, data);
+    else if (data > rootPtr->data) rootPtr->right = deleteElement(rootPtr->right, data);
+        // Wohoo... I found you, Get ready to be deleted
+    else {
+        // Case 1:  No child
+        if(rootPtr->left == NULL && rootPtr->right == NULL) {
+            delete rootPtr;
+            rootPtr = NULL;
+        }
+            //Case 2: One child
+        else if(rootPtr->left == NULL) {
+            BtNode *temp = rootPtr;
+            rootPtr = rootPtr->right;
+            delete temp;
+        }
+        else if(rootPtr->right == NULL) {
+            BtNode *temp = rootPtr;
+            rootPtr = rootPtr->left;
+            delete temp;
+        }
+            // case 3: 2 children
+        else {
+            BtNode  *temp = FindMin(rootPtr->right);
+            rootPtr->data = temp->data;
+            rootPtr->right = deleteElement(rootPtr->right, temp->data);
+        }
+    }
+    return rootPtr;
 }
 
+//μεθοδος ευρεσης μεγιστου
 //αυτο μπορει να γινει και με αναδρομη
 BtNode* findMax(BtNode* rootPtr){ //για να βρουμε το μεγιστο πρεπει να διασχιζουμε το δεντρο συνεχεια δεξια
     BtNode* current = rootPtr;
@@ -59,6 +94,7 @@ BtNode* insert(BtNode* rootPtr, int data){
     return rootPtr;
 }
 
+
 //μεθοδος αναζητησης κομβων
 bool search(BtNode *rootPtr, int data){
     if(rootPtr == NULL) return  false;
@@ -69,6 +105,7 @@ bool search(BtNode *rootPtr, int data){
 
 
 int main() {
+
     BtNode* rootPtr; // pointer που δειχνει στην ρίζα του δεντρου
     rootPtr = NULL; //αρχικοποιουμαι το δεντρο στο κενο
     rootPtr = insert(rootPtr,  12);     rootPtr = insert(rootPtr,52);
@@ -79,12 +116,16 @@ int main() {
 
 
 
-    BtNode* maxNode = findMax(rootPtr);
-    deleteMax(maxNode);
+    BtNode* maxNode = findMax(rootPtr); //ευρεση μεγιστου
     cout<<"The maximum is: " << maxNode->data<<endl;
+
+    deleteElement(maxNode, maxNode->data); //διαγραφη μεγιστου
+    cout <<"The maximum has been deleted\n";
     int  number;
     cout<<"Enter the number you want to search in the binary tree"<<endl;
     cin>>number;
     if(search(rootPtr, number) == true) cout <<"found\n";
     else cout<<"Not found\n";
+
+
 }
