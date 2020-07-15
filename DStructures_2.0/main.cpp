@@ -17,25 +17,26 @@ BtNode* getNewNode(int data){
 }
 
 //Function to find minimum in a tree.
-BtNode* FindMin(BtNode* root)
+BtNode* findMin(BtNode *root)
 {
     while(root->left != NULL) root = root->left;
     return root;
 }
+
+
 //μεθοδος διαγραφής μεγιστου
 // Function to search a delete a value from tree.
 BtNode* deleteElement(BtNode *rootPtr, int data) {
     if(rootPtr == NULL) return rootPtr;
     else if(data < rootPtr->data) rootPtr->left = deleteElement(rootPtr->left, data);
     else if (data > rootPtr->data) rootPtr->right = deleteElement(rootPtr->right, data);
-        // Wohoo... I found you, Get ready to be deleted
     else {
-        // Case 1:  No child
+              // Case 1:  Δεν εχει παιδια
         if(rootPtr->left == NULL && rootPtr->right == NULL) {
             delete rootPtr;
             rootPtr = NULL;
         }
-            //Case 2: One child
+            //Case 2: Ενα παιδι
         else if(rootPtr->left == NULL) {
             BtNode *temp = rootPtr;
             rootPtr = rootPtr->right;
@@ -46,9 +47,9 @@ BtNode* deleteElement(BtNode *rootPtr, int data) {
             rootPtr = rootPtr->left;
             delete temp;
         }
-            // case 3: 2 children
+            // case 3: 2 παιδιά
         else {
-            BtNode  *temp = FindMin(rootPtr->right);
+            BtNode  *temp = findMin(rootPtr->right);
             rootPtr->data = temp->data;
             rootPtr->right = deleteElement(rootPtr->right, temp->data);
         }
